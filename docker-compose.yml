@@ -6,6 +6,14 @@ services:
         restart: unless-stopped
         ports:
             - "${SERVER_PORT}:${SERVER_PORT}"
-        # depends_on:
-        #     - mongo
-        command: node src/server.js
+            - "9229:9229" #para debugar de dentro do docker, mas tem que rebuildar sem a flag de produção
+        depends_on:
+            - mongo
+        command: "npm start"
+
+    mongo:
+        image: mongo
+        volumes:
+            - db_volume:/data/db
+volumes:
+    db_volume:
