@@ -1,15 +1,19 @@
-version: "3"
+version: "3.4"
 services:
     api:
         container_name: sw-planets-api
-        build: .
+        build:
+            context: .
+            # target: prod
+            target: debug
         restart: unless-stopped
         ports:
             - "${SERVER_PORT}:${SERVER_PORT}"
             - "9229:9229" #para debugar de dentro do docker, mas tem que rebuildar sem a flag de produção
         depends_on:
             - mongo
-        command: "npm start"
+        volumes:
+            - ./:/usr/app/
 
     mongo:
         image: mongo
