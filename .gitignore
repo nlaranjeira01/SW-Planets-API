@@ -1,6 +1,3 @@
-# Configuração de debug do VSCode
-.vscode/launch.json
-
 # Logs
 logs
 *.log
