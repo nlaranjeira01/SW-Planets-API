@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "NODE_ENV=production node src/server.js",
         "dev": "NODE_ENV=development nodemon src/server.js",
-        "debug": "NODE_ENV=development nodemon --inspect src/server.js"
+        "debug": "NODE_ENV=development nodemon --inspect=0.0.0.0:9229 src/server.js"
     },
     "repository": {
         "type": "git",
