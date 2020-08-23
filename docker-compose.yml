@@ -1,0 +1,11 @@
+version: "3"
+services:
+    api:
+        container_name: sw-planets-api
+        build: .
+        restart: unless-stopped
+        ports:
+            - "${SERVER_PORT}:${SERVER_PORT}"
+        # depends_on:
+        #     - mongo
+        command: node src/server.js
