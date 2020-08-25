@@ -4,12 +4,15 @@ const { NODE_ENV: environment } = process.env;
 
 const errorHandlerMiddleware = (req, res, next) => {
     res.handleError = (error) => {
+        const stacktrace = error.stack;
         const e = error instanceof ApiError ? error : new InternalServerError();
 
         return res.status(e.status).send({
             error: e.message,
             stacktrace:
-                environment === "development" ? e.stacktrace : undefined,
+                environment === "development" || environment === "test"
+                    ? stacktrace
+                    : undefined,
         });
     };
 

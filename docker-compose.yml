@@ -16,7 +16,8 @@ services:
             - ./:/usr/app/
 
     mongo:
-        image: mongo
+        container_name: sw-planets-mongo
+        image: mongo:4.4.0
         volumes:
             - db_volume:/data/db
 volumes:
