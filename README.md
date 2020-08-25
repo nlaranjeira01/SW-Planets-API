@@ -3,7 +3,7 @@
 
 # Star Wars Planets API
 
-API dos planetas de Star Wars para o teste da B2W.
+API que armazena e manipula informações de planetas do universo Star Wars.
 
 <hr>
 
