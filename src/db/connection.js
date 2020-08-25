@@ -24,6 +24,7 @@ module.exports = {
         return mongoose.connect(connectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
+            useCreateIndex: true,
         });
     },
 };
