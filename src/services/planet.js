@@ -57,7 +57,7 @@ async function insertOne({ name, climate, terrain }) {
     return Planet.create(planetInfo);
 }
 
-async function deleteOne(id) {
+async function deleteById(id) {
     const result = await Planet.deleteOne({ _id: id });
 
     if (result.n === 0) {
@@ -72,5 +72,5 @@ module.exports = {
     findById,
     findByName,
     insertOne,
-    deleteOne,
+    deleteById,
 };
