@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { StatusCodes } = require("http-status-codes");
-const { PlanetService } = require("../services");
+const { planetService } = require("../services");
 const { planetValidator } = require("../validators");
 
 const router = new Router();
@@ -12,7 +12,7 @@ const router = new Router();
 
 router.get("/", async (req, res) => {
     try {
-        const planets = await PlanetService.findAll();
+        const planets = await planetService.findAll();
 
         return res.status(StatusCodes.OK).json(planets);
     } catch (error) {
@@ -28,7 +28,7 @@ router.post("/", planetValidator.planetBody, async (req, res) => {
         planetInfo.terrain = req.body.terrain;
         planetInfo.climate = req.body.climate;
 
-        const planet = await PlanetService.insertOne(planetInfo);
+        const planet = await planetService.insertOne(planetInfo);
 
         return res.status(StatusCodes.CREATED).json(planet);
     } catch (error) {
@@ -41,7 +41,7 @@ router.get("/with-name/:name", planetValidator.nameParam, async (req, res) => {
     try {
         const { name } = req.params;
 
-        const planet = await PlanetService.findByName(name);
+        const planet = await planetService.findByName(name);
 
         return res.status(StatusCodes.OK).json(planet);
     } catch (error) {
@@ -53,7 +53,7 @@ router.get("/:id", planetValidator.idParam, async (req, res) => {
     try {
         const { id } = req.params;
 
-        const planet = await PlanetService.findById(id);
+        const planet = await planetService.findById(id);
 
         return res.status(StatusCodes.OK).json(planet);
     } catch (error) {
@@ -65,7 +65,7 @@ router.delete("/:id", planetValidator.idParam, async (req, res) => {
     try {
         const { id } = req.params;
 
-        await PlanetService.deleteById(id);
+        await planetService.deleteById(id);
 
         return res.status(StatusCodes.OK).json({
             id,

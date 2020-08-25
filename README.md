@@ -21,4 +21,4 @@ API dos planetas de Star Wars para o teste da B2W.
 
 ## Documentação
 
-WIP
+-   Uma documentação feita com swagger está disponível em `/api/docs`.

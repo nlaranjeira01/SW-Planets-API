@@ -1,6 +1,6 @@
 const request = require("supertest");
 const { StatusCodes } = require("http-status-codes");
-const PlanetService = require("../services/planet");
+const planetService = require("../services/planet");
 const app = require("../app");
 const {
     InternalServerError,
@@ -33,7 +33,7 @@ describe("Planet Routes", () => {
                 },
             ];
 
-            PlanetService.findAll.mockResolvedValueOnce(planetDocumentArray);
+            planetService.findAll.mockResolvedValueOnce(planetDocumentArray);
 
             const res = await request(app).get("/api/planet");
 
@@ -45,7 +45,7 @@ describe("Planet Routes", () => {
         });
 
         it("should handle errors coming from service layer", async () => {
-            PlanetService.findAll.mockImplementationOnce(() => {
+            planetService.findAll.mockImplementationOnce(() => {
                 throw new Error("Some Error Message");
             });
 
@@ -75,7 +75,7 @@ describe("Planet Routes", () => {
                 climate: "temperated",
             };
 
-            PlanetService.insertOne.mockResolvedValueOnce(planetDocument);
+            planetService.insertOne.mockResolvedValueOnce(planetDocument);
 
             const res = await request(app).post("/api/planet").send(postData);
 
@@ -87,7 +87,7 @@ describe("Planet Routes", () => {
         });
 
         it("should handle errors coming from service layer", async () => {
-            PlanetService.insertOne.mockImplementationOnce(() => {
+            planetService.insertOne.mockImplementationOnce(() => {
                 throw new Error("Some Error Message");
             });
 
@@ -108,7 +108,7 @@ describe("Planet Routes", () => {
             const mockFn = jest.fn();
 
             // se o serviço de inserir planeta for chamado, mockFn será chamado também
-            PlanetService.insertOne.mockImplementationOnce(() => {
+            planetService.insertOne.mockImplementationOnce(() => {
                 mockFn();
             });
 
@@ -139,7 +139,7 @@ describe("Planet Routes", () => {
                 __v: 0,
             };
 
-            PlanetService.findById.mockResolvedValueOnce(planetDocument);
+            planetService.findById.mockResolvedValueOnce(planetDocument);
 
             const res = await request(app).get(
                 "/api/planet/5f4459df8ee5314e8a7c0bcb"
@@ -150,13 +150,13 @@ describe("Planet Routes", () => {
                 res.header["content-type"].includes("application/json")
             ).toBe(true);
             expect(res.statusCode).toEqual(StatusCodes.OK);
-            expect(PlanetService.findById).toBeCalledWith(
+            expect(planetService.findById).toBeCalledWith(
                 "5f4459df8ee5314e8a7c0bcb"
             );
         });
 
         it("should handle errors coming from service layer", async () => {
-            PlanetService.findById.mockImplementationOnce(() => {
+            planetService.findById.mockImplementationOnce(() => {
                 throw new Error("Some Error Message");
             });
 
@@ -167,7 +167,7 @@ describe("Planet Routes", () => {
 
             expect(res.body.error).toEqual(expectedError.message);
             expect(res.statusCode).toBe(expectedError.status);
-            expect(PlanetService.findById).toBeCalledWith(
+            expect(planetService.findById).toBeCalledWith(
                 "5f4459df8ee5314e8a7c0bcb"
             );
         });
@@ -176,7 +176,7 @@ describe("Planet Routes", () => {
             const mockFn = jest.fn();
 
             // se o serviço de inserir planeta for chamado, mockFn será chamado também
-            PlanetService.findById.mockImplementationOnce(() => {
+            planetService.findById.mockImplementationOnce(() => {
                 mockFn();
             });
 
@@ -192,14 +192,14 @@ describe("Planet Routes", () => {
     describe("DELETE /api/planet/:id", () => {
         it("should return the id of the deleted planet with status OK", async () => {
             // nesse caso o valor retornado pelo deleteById não importa
-            PlanetService.deleteById.mockResolvedValueOnce(true);
+            planetService.deleteById.mockResolvedValueOnce(true);
 
             const res = await request(app).delete(
                 "/api/planet/5f4459df8ee5314e8a7c0bcb"
             );
 
             expect(res.body).toMatchObject({ id: "5f4459df8ee5314e8a7c0bcb" });
-            expect(PlanetService.deleteById).toBeCalledWith(
+            expect(planetService.deleteById).toBeCalledWith(
                 "5f4459df8ee5314e8a7c0bcb"
             );
             expect(
@@ -209,7 +209,7 @@ describe("Planet Routes", () => {
         });
 
         it("should handle errors coming from service layer", async () => {
-            PlanetService.deleteById.mockImplementationOnce(() => {
+            planetService.deleteById.mockImplementationOnce(() => {
                 throw new Error("Some Error Message");
             });
 
@@ -220,7 +220,7 @@ describe("Planet Routes", () => {
 
             expect(res.body.error).toEqual(expectedError.message);
             expect(res.statusCode).toBe(expectedError.status);
-            expect(PlanetService.deleteById).toBeCalledWith(
+            expect(planetService.deleteById).toBeCalledWith(
                 "5f4459df8ee5314e8a7c0bcb"
             );
         });
@@ -229,7 +229,7 @@ describe("Planet Routes", () => {
             const mockFn = jest.fn();
 
             // se o serviço de inserir planeta for chamado, mockFn será chamado também
-            PlanetService.deleteById.mockImplementationOnce(() => {
+            planetService.deleteById.mockImplementationOnce(() => {
                 mockFn();
             });
 
@@ -254,7 +254,7 @@ describe("Planet Routes", () => {
                 __v: 0,
             };
 
-            PlanetService.findByName.mockResolvedValueOnce(planetDocument);
+            planetService.findByName.mockResolvedValueOnce(planetDocument);
 
             const res = await request(app).get(
                 "/api/planet/with-name/Yavin IV"
@@ -265,11 +265,11 @@ describe("Planet Routes", () => {
                 res.header["content-type"].includes("application/json")
             ).toBe(true);
             expect(res.statusCode).toEqual(StatusCodes.OK);
-            expect(PlanetService.findByName).toBeCalledWith("Yavin IV");
+            expect(planetService.findByName).toBeCalledWith("Yavin IV");
         });
 
         it("should handle errors coming from service layer", async () => {
-            PlanetService.findByName.mockImplementationOnce(() => {
+            planetService.findByName.mockImplementationOnce(() => {
                 throw new Error("Some Error Message");
             });
 
@@ -280,7 +280,7 @@ describe("Planet Routes", () => {
 
             expect(res.body.error).toEqual(expectedError.message);
             expect(res.statusCode).toBe(expectedError.status);
-            expect(PlanetService.findByName).toBeCalledWith("Yavin IV");
+            expect(planetService.findByName).toBeCalledWith("Yavin IV");
         });
     });
 

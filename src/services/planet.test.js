@@ -7,7 +7,7 @@ jest.mock("./swapi", () => {
 const { Planet } = require("../db/models");
 const { ResourceNotFoundError } = require("../errors");
 const SWAPIService = require("./swapi");
-const PlanetService = require("./planet");
+const planetService = require("./planet");
 
 describe("Planet service", () => {
     // cria a conexão e mocka o swapi com um valor padrão
@@ -46,7 +46,7 @@ describe("Planet service", () => {
             filmsCount: 1,
         });
 
-        const planets = await PlanetService.findAll();
+        const planets = await planetService.findAll();
 
         expect(planets.length).toEqual(1);
         expect(planets[0].toObject({ getters: true })).toMatchObject(
@@ -61,7 +61,7 @@ describe("Planet service", () => {
             terrain: "jungle, rainforests",
             filmsCount: 1,
         });
-        const planet = await PlanetService.findById(dummyPlanet._id);
+        const planet = await planetService.findById(dummyPlanet._id);
 
         expect(planet.toObject({ getters: true })).toMatchObject(
             dummyPlanet.toObject({ getters: true })
@@ -76,7 +76,7 @@ describe("Planet service", () => {
             filmsCount: 1,
         });
 
-        const planet = await PlanetService.findByName(dummyPlanet.name);
+        const planet = await planetService.findByName(dummyPlanet.name);
 
         expect(planet.toObject({ getters: true })).toMatchObject(
             dummyPlanet.toObject({ getters: true })
@@ -91,7 +91,7 @@ describe("Planet service", () => {
             filmsCount: 1,
         });
 
-        const deleted = await PlanetService.deleteById(dummyPlanet._id);
+        const deleted = await planetService.deleteById(dummyPlanet._id);
 
         expect(deleted).toBe(true);
     });
@@ -105,7 +105,7 @@ describe("Planet service", () => {
 
         SWAPIService.getPlanetFilmsCountByName.mockResolvedValueOnce(1);
 
-        const planet = await PlanetService.insertOne(dummyPlanetInfo);
+        const planet = await planetService.insertOne(dummyPlanetInfo);
 
         expect(planet.name).toMatch(dummyPlanetInfo.name);
         expect(planet.filmsCount).toBe(1);
@@ -119,7 +119,7 @@ describe("Planet service", () => {
 
         SWAPIService.getPlanetFilmsCountByName.mockResolvedValueOnce(1);
 
-        expect(PlanetService.insertOne(dummyPlanetInfo)).rejects.toThrowError(
+        expect(planetService.insertOne(dummyPlanetInfo)).rejects.toThrowError(
             mongoose.Error.ValidationError
         );
     });
@@ -127,7 +127,7 @@ describe("Planet service", () => {
     it("should fail to delete a planet that doesn't exist", async () => {
         const dummyId = "5f4459df8ee5314e8a7c0bcb";
 
-        await expect(PlanetService.deleteById(dummyId)).rejects.toThrowError(
+        await expect(planetService.deleteById(dummyId)).rejects.toThrowError(
             ResourceNotFoundError
         );
     });
@@ -135,7 +135,7 @@ describe("Planet service", () => {
     it("should fail to find a planet that doesn't exist by name", async () => {
         const dummyName = "Yavin IV";
 
-        await expect(PlanetService.findByName(dummyName)).rejects.toThrowError(
+        await expect(planetService.findByName(dummyName)).rejects.toThrowError(
             ResourceNotFoundError
         );
     });
@@ -143,7 +143,7 @@ describe("Planet service", () => {
     it("should fail to find a planet that doesn't exist by id", async () => {
         const dummyId = "5f4459df8ee5314e8a7c0bcb";
 
-        await expect(PlanetService.findById(dummyId)).rejects.toThrowError(
+        await expect(planetService.findById(dummyId)).rejects.toThrowError(
             ResourceNotFoundError
         );
     });
@@ -170,7 +170,7 @@ describe("Planet service", () => {
 
         SWAPIService.getPlanetFilmsCountByName.mockResolvedValueOnce(2);
 
-        const planet = await PlanetService.findById(dummyPlanet._id);
+        const planet = await planetService.findById(dummyPlanet._id);
 
         expect(planet.filmsCount).toBe(2);
     });
@@ -197,7 +197,7 @@ describe("Planet service", () => {
 
         SWAPIService.getPlanetFilmsCountByName.mockResolvedValueOnce(2);
 
-        const planet = await PlanetService.findByName(dummyPlanet.name);
+        const planet = await planetService.findByName(dummyPlanet.name);
 
         expect(planet.filmsCount).toBe(2);
     });
@@ -224,7 +224,7 @@ describe("Planet service", () => {
 
         SWAPIService.getPlanetFilmsCountByName.mockResolvedValueOnce(2);
 
-        const planets = await PlanetService.findAll();
+        const planets = await planetService.findAll();
 
         expect(planets[0].filmsCount).toBe(2);
     });

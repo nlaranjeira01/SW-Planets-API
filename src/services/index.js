@@ -1,7 +1,7 @@
 const SWAPIService = require("./swapi");
-const PlanetService = require("./planet");
+const planetService = require("./planet");
 
 module.exports = {
     SWAPIService,
-    PlanetService,
+    planetService,
 };
