@@ -91,7 +91,7 @@ describe("Planet service", () => {
             filmsCount: 1,
         });
 
-        const deleted = await PlanetService.deleteOne(dummyPlanet._id);
+        const deleted = await PlanetService.deleteById(dummyPlanet._id);
 
         expect(deleted).toBe(true);
     });
@@ -111,7 +111,7 @@ describe("Planet service", () => {
         expect(planet.filmsCount).toBe(1);
     });
 
-    it("should fail to create a planet without a name", async () => {
+    it("should fail to create a planet without a name", () => {
         const dummyPlanetInfo = {
             climate: "temperate, tropical",
             terrain: "jungle, rainforests",
@@ -127,7 +127,7 @@ describe("Planet service", () => {
     it("should fail to delete a planet that doesn't exist", async () => {
         const dummyId = "5f4459df8ee5314e8a7c0bcb";
 
-        await expect(PlanetService.deleteOne(dummyId)).rejects.toThrowError(
+        await expect(PlanetService.deleteById(dummyId)).rejects.toThrowError(
             ResourceNotFoundError
         );
     });
